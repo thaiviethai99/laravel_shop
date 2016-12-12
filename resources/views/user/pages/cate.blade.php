@@ -18,21 +18,11 @@
           <div class="sidewidt">
             <h2 class="heading2"><span>Categories</span></h2>
             <ul class="nav nav-list categories">
+            @foreach($menu_cate as $item)
               <li>
-                <a href="category.html">Men Accessories</a>
+                <a href="{!! URL('loai-san-pham',[$item->id,$item->alias]) !!}">{{$item->name}}</a>
               </li>
-              <li>
-                <a href="category.html">Women Accessories</a>
-              </li>
-              <li>
-                <a href="category.html">Computers </a>
-              </li>
-              <li>
-                <a href="category.html">Home and Furniture</a>
-              </li>
-              <li>
-                <a href="category.html">Others</a>
-              </li>
+            @endforeach
             </ul>
           </div>
          <!--  Best Seller -->  
@@ -63,24 +53,17 @@
           <div class="sidewidt">
             <h2 class="heading2"><span>Latest Products</span></h2>
             <ul class="bestseller">
+            @foreach($lasted_product as $item)
               <li>
-                <img width="50" height="50" src="img/prodcut-40x40.jpg" alt="product" title="product">
-                <a class="productname" href="product.html"> Product Name</a>
-                <span class="procategory">Women Accessories</span>
-                <span class="price">$250</span>
+                <img width="50" height="50" src="{{asset('public/uploads/images/small_thumb_'.$item->image)}}" alt="product" title="product">
+                <a class="productname" href="{{url('chi-tiet-san-pham',[$item->id,$item->alias])}}">{{$item->name}}</a>
+                <?php 
+                $cate = DB::table('cates')->select('name')->where('id',$item->cate_id)->first();
+                ?>
+                <span class="procategory">{{$cate->name}}</span>
+                <span class="price">{{Helper::product_price($item->price)}}</span>
               </li>
-              <li>
-                <img width="50" height="50" src="img/prodcut-40x40.jpg" alt="product" title="product">
-                <a class="productname" href="product.html"> Product Name</a>
-                <span class="procategory">Electronics</span>
-                <span class="price">$250</span>
-              </li>
-              <li>
-                <img width="50" height="50" src="img/prodcut-40x40.jpg" alt="product" title="product">
-                <a class="productname" href="product.html"> Product Name</a>
-                <span class="procategory">Electronics</span>
-                <span class="price">$250</span>
-              </li>
+            @endforeach
             </ul>
           </div>
           <!--  Must have -->  
@@ -110,10 +93,10 @@
                   <ul class="thumbnails grid">
                   @foreach($product_cate as $item)
                     <li class="span3">
-                      <a class="prdocutname" href="product.html">{{$item->name}}</a>
+                      <a class="prdocutname" href="{{url('chi-tiet-san-pham',[$item->id,$item->alias])}}">{{$item->name}}</a>
                       <div class="thumbnail">
                         <span class="sale tooltip-test">Sale</span>
-                        <a href="#"><img alt="" src="{{asset('public/uploads/images/thumb_'.$item->image)}}"></a>
+                        <a href="{{url('chi-tiet-san-pham',[$item->id,$item->alias])}}"><img alt="" src="{{asset('public/uploads/images/thumb_'.$item->image)}}"></a>
                         <div class="pricetag">
                           <span class="spiral"></span><a href="#" class="productcart">ADD TO CART</a>
                           <div class="price">
@@ -125,8 +108,23 @@
                     </li>
                   @endforeach
                   </ul>
+                  Tong so trang {!!$product_cate->lastPage()!!}
                   <div class="pagination pull-right">
-                  {{ $product_cate->links() }}
+                    <ul>
+                    @if($product_cate->currentPage()!=1)
+                      <li><a href="{{$product_cate->url($product_cate->currentPage()-1)}}">Prev</a>
+                      </li>
+                    @endif
+                      @for($i=1;$i<=$product_cate->lastPage();$i++)
+                      <li class="{{($product_cate->currentPage()==$i)?'active':''}}">
+                        <a href="{{$product_cate->url($i)}}">{{$i}}</a>
+                      </li>
+                      @endfor
+                      @if($product_cate->currentPage()!=$product_cate->lastPage())
+                      <li><a href="{{$product_cate->url($product_cate->currentPage()+1)}}">Next</a>
+                      </li>
+                      @endif
+                    </ul>
                   </div>
                 </section>
               </div>

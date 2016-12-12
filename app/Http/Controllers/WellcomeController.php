@@ -13,8 +13,18 @@ class WellcomeController extends Controller
     }
 
     public function loaisanpham($id){
-        $product_cate = DB::table('products')->select('id','name','price','image','alias','cate_id')->where('cate_id',$id)->orderBy('id','DESC')->paginate(2);;
-    	return view('user.pages.cate',compact('product_cate'));
+        $product_cate = DB::table('products')->select('id','name','price','image','alias','cate_id')->where('cate_id',$id)->orderBy('id','DESC')->paginate(2);
+        $cate = DB::table('cates')->select('parent_id')->where('id',$id)->first();
+        $menu_cate = DB::table('cates')->select('id','name','alias')->where('parent_id',$cate->parent_id)->get();
+        $lasted_product = DB::table('products')->select('id','name','alias','image','price','cate_id')->orderBy('id','DESC')->take(3)->get();
+    	return view('user.pages.cate',compact('product_cate','menu_cate','lasted_product'));
+    }
+
+    public function chitietsanpham($id){
+    	$product_detail = DB::table('products')->where('id',$id)->first();
+    	$image_product = DB::table('product_images')->where('product_id',$id)->get();
+    	$product_cate = DB::table('products')->where('cate_id',$product_detail->cate_id)->where('id','<>',$id)->take(4)->get();
+    	return view('user.pages.detail',compact('product_detail','image_product','product_cate'));
     }
 
 }

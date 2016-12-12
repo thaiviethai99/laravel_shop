@@ -86,3 +86,5 @@ Route::get('/test',function(){
 });
 
 Route::get('loai-san-pham/{id}/{tenloai}', ['as' => 'loaisanpham', 'uses' => 'WellcomeController@loaisanpham']);
+
+Route::get('chi-tiet-san-pham/{id}/{tenloai}', ['as' => 'chitietsanpham', 'uses' => 'WellcomeController@chitietsanpham']);

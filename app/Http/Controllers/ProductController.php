@@ -73,6 +73,11 @@ class ProductController extends Controller
             $img           = Image::make($imageRealPath);
             $img->resize(270, 350);
             $img->save($destinationPath . '/' . $thumbName);
+            //thumb_small 40X40
+            $smallThumbName     = 'small_thumb_' . $fileName;
+            $img           = Image::make($imageRealPath);
+            $img->resize(40, 40);
+            $img->save($destinationPath . '/' . $smallThumbName);
             $product              = new Product;
             $product->name        = $request->txtName;
             $product->alias       = $request->txtAlias;
@@ -200,10 +205,14 @@ class ProductController extends Controller
                 $fileName        = $product->image; // renameing image
                 $request->file('avatar')->move($destinationPath, $fileName);
                 $thumbName     = 'thumb_' . $fileName;
+                $smallThumbName = 'small_thumb_'.$fileName;
                 $imageRealPath = $destinationPath . '/' . $fileName;
                 $img           = Image::make($imageRealPath);
                 $img->resize(270, 350);
                 $img->save($destinationPath . '/' . $thumbName);
+                $img           = Image::make($imageRealPath);
+                $img->resize(40, 40);
+                $img->save($destinationPath . '/' . $smallThumbName);
             }
             // getting all of the post data
             if (!empty($request->file('images'))) {
