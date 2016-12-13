@@ -88,3 +88,6 @@ Route::get('/test',function(){
 Route::get('loai-san-pham/{id}/{tenloai}', ['as' => 'loaisanpham', 'uses' => 'WellcomeController@loaisanpham']);
 
 Route::get('chi-tiet-san-pham/{id}/{tenloai}', ['as' => 'chitietsanpham', 'uses' => 'WellcomeController@chitietsanpham']);
+
+Route::get('lien-he', ['as' => 'lienhe', 'uses' => 'WellcomeController@lienhe']);
+Route::post('lien-he', ['as' => 'postLienHe', 'uses' => 'WellcomeController@postLienHe']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Image;
+use Mail;
 class WellcomeController extends Controller
 {
     public function index(){
@@ -25,6 +26,23 @@ class WellcomeController extends Controller
     	$image_product = DB::table('product_images')->where('product_id',$id)->get();
     	$product_cate = DB::table('products')->where('cate_id',$product_detail->cate_id)->where('id','<>',$id)->take(4)->get();
     	return view('user.pages.detail',compact('product_detail','image_product','product_cate'));
+    }
+
+    public function lienhe(){
+    	return view('user.pages.contact');
+    }
+
+    public function postLienHe(Request $request){
+    	$data = ['hoten'=>$request->name,'mess'=>$request->message];
+    	//print_r($data);die();
+    	Mail::send('user.mail.contact',$data,function($mess){
+    		$mess->from('haidaica99999@gmail.com','hai dai ca');
+    		$mess->to('thaiviethai99@gmail.com','viet hai')->subject('Day la mail viet hai');
+    	});
+    	echo "<script>
+    	alert('Cam on ban da gop y.Chung toi se lien he lai voi ban trong thoi gian som nhat');
+    	window.location = '".url('/')."'
+    		</script>";
     }
 
 }

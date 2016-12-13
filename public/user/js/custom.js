@@ -286,7 +286,7 @@ $('document').ready(function(){
 
 	// Contact Form
 
-	$(document).ready(function() {	
+	/*$(document).ready(function() {	
 		$(".contactform").validate({
 	   submitHandler: function(form) {
 		   var name = $("input#name").val();
@@ -309,7 +309,7 @@ $('document').ready(function(){
 	   return false;
 	  	}
 		});
-	});
+	});*/
 
 
 // Flexsliders	  
