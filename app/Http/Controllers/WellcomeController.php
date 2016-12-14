@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Image;
 use Mail;
+use Cart;
 class WellcomeController extends Controller
 {
     public function index(){
@@ -43,6 +44,13 @@ class WellcomeController extends Controller
     	alert('Cam on ban da gop y.Chung toi se lien he lai voi ban trong thoi gian som nhat');
     	window.location = '".url('/')."'
     		</script>";
+    }
+
+    public function muahang($id){
+    	$productBuy = DB::table('products')->where('id',$id)->first();
+    	Cart::add(['id'=>$id,'name'=>$productBuy->name,'qty'=>1,'price'=>$productBuy->price,'options' => ['img' => $productBuy->image]]);
+    	$content = Cart::content();
+    	print_r($content);
     }
 
 }

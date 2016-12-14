@@ -34,11 +34,16 @@
 
 <div id="maincontainer">
   <!-- Slider Start-->
+  <?php 
+  if(\Request::route()->getName()==''){
+  ?>
   @include('user.blocks.slide')
+
   <!-- Slider End-->
   
   <!-- Section Start-->
     @include('user.blocks.otherdetail')
+    <?php }?>
   <!-- Section End-->
   @yield('content')
   
