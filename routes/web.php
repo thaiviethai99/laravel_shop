@@ -92,3 +92,5 @@ Route::get('chi-tiet-san-pham/{id}/{tenloai}', ['as' => 'chitietsanpham', 'uses'
 Route::get('lien-he', ['as' => 'lienhe', 'uses' => 'WellcomeController@lienhe']);
 Route::post('lien-he', ['as' => 'postLienHe', 'uses' => 'WellcomeController@postLienHe']);
 Route::get('mua-hang/{id}/{tensanpham}', ['as' => 'muahang', 'uses' => 'WellcomeController@muahang']);
+Route::get('gio-hang', ['as' => 'giohang', 'uses' => 'WellcomeController@giohang']);
+Route::get('xoa-san-pham/{id}', ['as' => 'xoasanpham', 'uses' => 'WellcomeController@xoasanpham']);

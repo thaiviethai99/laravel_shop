@@ -10,6 +10,9 @@ use Cart;
 class WellcomeController extends Controller
 {
     public function index(){
+        //Cart::destroy();
+        //$content = Cart::content();
+        //print_r($content);
     	$product = DB::table('products')->select('id','name','price','image','alias')->orderBy('id','DESC')->skip(0)->take(4)->get();
     	return view('user.pages.home',compact('product'));
     }
@@ -49,8 +52,19 @@ class WellcomeController extends Controller
     public function muahang($id){
     	$productBuy = DB::table('products')->where('id',$id)->first();
     	Cart::add(['id'=>$id,'name'=>$productBuy->name,'qty'=>1,'price'=>$productBuy->price,'options' => ['img' => $productBuy->image]]);
-    	$content = Cart::content();
-    	print_r($content);
+        return redirect()->route('giohang');
+    }
+
+    public function giohang(){
+        $content = Cart::content();
+        print_r($content);
+        $total = Cart::total();
+        return view('user.pages.shopping_cart',compact('content','total'));
+    }
+
+    public function xoasanpham($id){
+        Cart::remove($id);
+        return redirect()->route('giohang');
     }
 
 }
